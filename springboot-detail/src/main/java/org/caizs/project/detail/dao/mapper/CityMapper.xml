@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.caizs.project.detail.dao.CityDao">
+    <resultMap id="cityMap" type="org.caizs.project.detail.domain.City">
+        <id column="ID" javaType="int" jdbcType="INTEGER" property="id"/>
+        <result column="Name" javaType="string" jdbcType="VARCHAR" property="name"/>
+        <result column="CountryCode" javaType="string" jdbcType="VARCHAR" property="countryCode"/>
+        <result column="District" javaType="string" jdbcType="VARCHAR" property="district"/>
+        <result column="Population" javaType="int" jdbcType="INTEGER" property="population"/>
+    </resultMap>
+
+    <select id="findList" resultMap="cityMap">
+        SELECT *
+        FROM city
+        ORDER BY ID
+    </select>
+</mapper>

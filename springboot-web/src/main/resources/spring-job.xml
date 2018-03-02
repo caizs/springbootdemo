@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
+  xmlns:task="http://www.springframework.org/schema/task"
+  xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.dangdang.com/schema/ddframe/reg
+                        http://www.dangdang.com/schema/ddframe/reg/reg.xsd
+                        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+                        http://www.dangdang.com/schema/ddframe/job
+                        http://www.dangdang.com/schema/ddframe/job/job.xsd
+                        ">
+  <!-- =========================elastic-job  需要启动ZK   start ========================= -->
+  <!--配置作业注册中心 -->
+  <!--<reg:zookeeper id="regCenter" server-lists="${job.zk}" namespace="live-job" base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3" />-->
+
+  <!--&lt;!&ndash; 配置作业-->
+    <!--参数解释：-->
+      <!--sharding-total-count：分片数量-->
+      <!--sharding-item-parameter：分片项匹配对应关系，0=北京（分片-业务自定义）-->
+      <!--job-parameter：自定义参数 &ndash;&gt;-->
+  <!--<job:simple id="myJob33" class="com.lianfan.project.task.ElasticDemoJob" registry-center-ref="regCenter" cron="0/10 * * * * ?" sharding-total-count="2" sharding-item-parameters="0=北京,1=上海" job-parameter="xxoo"/>-->
+
+  <!--<job:simple id="myJob" class="com.lianfan.project.task.ElasticDemoJob" registry-center-ref="regCenter" cron="0/10 * * * * ?" sharding-total-count="1" overwrite="true"/>-->
+
+
+  <!-- =========================elastic-job  end ========================= -->
+
+  <!-- =========================spring task  start========================= -->
+  <task:scheduled-tasks>
+    <task:scheduled ref="springDemoTask" method="test" cron="0/15 * *  * * ? "/>
+  </task:scheduled-tasks>
+  <!-- =========================spring task  end========================= -->
+</beans>

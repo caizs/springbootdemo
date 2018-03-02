@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	 <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	 
+     <property name="consoleLogPattern" value="${CONSOLE_LOG_PATTERN}" />
+     <property name="fileLogPattern" value="${FILE_LOG_PATTERN}" />
+     
+     <property name="bizFileName" value="/var/logs/server/springboot-biz.log" />
+     <property name="bizFileNamePattern" value="/var/logs/server/springboot-biz-%d{yyyy-MM-dd}-%i.log.gz" />
+     
+     <property name="serverFileName" value="/var/logs/server/springboot-info.log" />
+     <property name="serverFileNamePattern" value="/var/logs/server/springboot-info-%d{yyyy-MM-dd}-%i.log.gz" />
+ 
+     <property name="slowSqlFileName" value="/var/logs/slowsql/springboot.log" />
+     <property name="slowSqlFileNamePattern" value="/var/logs/slowsql/springboot-%d{yyyy-MM-dd}-%i.log.gz" />
+    
+     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${consoleLogPattern}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+     </appender> 
+    
+    <appender name="BizAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${bizFileName}</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${fileLogPattern}</Pattern>
+            <charset>utf8</charset>
+        </encoder>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+	      <fileNamePattern>${bizFileNamePattern}</fileNamePattern>
+	       <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+	       <maxFileSize>100MB</maxFileSize>    
+	       <maxHistory>60</maxHistory>
+	       <totalSizeCap>20GB</totalSizeCap>
+	    </rollingPolicy>
+    </appender>
+    
+    <appender name="ServerAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${serverFileName}</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${fileLogPattern}</Pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+          <fileNamePattern>${serverFileNamePattern}</fileNamePattern>
+           <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+           <maxFileSize>100MB</maxFileSize>    
+           <maxHistory>60</maxHistory>
+           <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+	       <level>INFO</level>
+	    </filter>
+    </appender>
+    
+    <appender name="SlowSqlAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${slowSqlFileName}</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${fileLogPattern}</Pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+          <fileNamePattern>${slowSqlFileNamePattern}</fileNamePattern>
+           <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+           <maxFileSize>100MB</maxFileSize>    
+           <maxHistory>60</maxHistory>
+           <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.lianfan" level="INFO" additivity="TRUE">
+        <appender-ref ref="BizAppender"/>
+    </logger>
+    
+    <logger name="com.alibaba.druid" level="ERROR" additivity="TRUE">
+        <appender-ref ref="SlowSqlAppender"/>
+    </logger>
+    
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ServerAppender"/> <!-- 所有info级别及以上日志 -->
+    </root>
+    
+</configuration> 

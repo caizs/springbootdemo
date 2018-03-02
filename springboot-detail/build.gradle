@@ -1,0 +1,4 @@
+dependencies {
+    compile project(":springboot-api")
+	compile project(":springboot-common")
+}

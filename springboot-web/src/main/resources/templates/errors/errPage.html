@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>页面请求失败</title>
+        <style type="text/css" >body,a,ul{margin:0;padding:0;list-style:none;word-wrap:break-word;text-decoration:none;font-family:"微软雅黑","Microsoft Yahei",sans-serif}.wrap{margin:0 auto;padding:0 12px;max-width:432px;text-align:center}.calendar{margin:51px auto 20px;width:66px;height:66px;border:1px solid #b9b9b9}.month{height:27px;line-height:27px;font-size:14px;color:#d9302b;background:#e2e2e2}.day{height:39px;line-height:39px;font-size:36px;color:#474747;background:#fafcfc}.title{padding:5px 0;font-size:18px}.prompt{color:#a3a3a3}.flyme{padding:73px 12px 0;font-size:0}.copyright{padding:8px 12px 24px;line-height:15px;font-size:10px;color:#7f7f7f}</style>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="title">页面请求失败</div>
+            <div class="prompt" th:text="${errMsg}"></div><br/>
+            
+            <div id="copyright" class="copyright">
+                Powered by 杭州连帆科技有限公司
+            </div>
+        </div>
+    </body>
+</html>
