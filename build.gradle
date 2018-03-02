@@ -196,20 +196,6 @@ publishing {
         }
     }
 
-    repositories {
-        maven {
-            credentials {
-                username = "${nexusUsername}"
-                password = "${nexusPassword}"
-            }
-
-            if (project.version.endsWith('-SNAPSHOT')) {
-                url "${nexusUrl}/content/repositories/snapshots"
-            } else {
-                url "${nexusUrl}/content/repositories/releases"
-            }
-        }
-    }
 }
 
 eclipseJdt << {
